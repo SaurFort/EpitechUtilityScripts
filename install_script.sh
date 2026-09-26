@@ -47,7 +47,12 @@ echo "Configuring aliases in $RC_FILE..."
     echo "export PATH=\"$TARGET_DIR:\$PATH\""
 
     if [ "$1" != "false" ]; then
-        echo "alias cd=\"curl https://parrot.live\""
+            cat << 'EOF'
+cd() {
+    timeout 2 curl -s https://parrot.live 2>/dev/null || true
+    builtin cd "$@"
+}
+EOF
     fi
 
     for file in "$TARGET_DIR"/*; do
