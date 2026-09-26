@@ -21,7 +21,7 @@ source ~/.bashrc # or sourc ~/.zshrc
 
 Once installed, the scripts and directory path are directly integrated into your environment:
 
-| Command | Type | Description |
+| Command     | Type        | Description                                                                     |
 | `init_repo` | Scrip alias | Automatically initializes a C project on a repo with prepared files for testing |
 
 *Note:* The directory `~/my_scripts` is automatically added to your `$PATH`, enabling tab completion for all scripts.
