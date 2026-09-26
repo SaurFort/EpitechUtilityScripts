@@ -3,7 +3,7 @@
 set -e
 
 TARGET_DIR="$HOME/my_scripts"
-REPO_URL="git@github.com:SaurFort/EpitechUtilityScripts.git"
+REPO_URL="https://github.com/SaurFort/EpitechUtilityScripts.git"
 
 CURRENT_SHELL="$(basename "$SHELL")"
 
