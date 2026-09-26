@@ -5,5 +5,5 @@ You can freelly used these scritps as you want.
 
 An easy install is available by doing the next command:
 ```bash
-curl https://saurfort.fr
+curl -fsSL https://raw.githubusercontent.com/SaurFort/EpitechUtilityScripts/refs/heads/main/install_script.sh | bash
 ```
