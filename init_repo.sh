@@ -10,10 +10,10 @@ only_test=false
 usage() {
     echo "Usage: $0 [OPTIONS]"
     echo "Options :"
-    echo "  -r, --repo <url>        URL du dépôt git"
-    echo "  -l, --location <path>   Dossier de destination"
-    echo "  -t, --only-test         Initialise git et push le .gitignore"
-    echo "  -h, --help              Affiche cette aide"
+    echo "  -r, --repo <url>        Git repo URL"
+    echo "  -l, --location <path>   Destination file"
+    echo "  -t, --only-test         Only add testing files"
+    echo "  -h, --help              Show this help message"
     exit 0
 }
 
@@ -55,7 +55,7 @@ echo "Adding the repo at the location..."
 mkdir -p "$location"
 cd "$location" || exit 1
 
-if [ "$only_test" = true ]; then
+if [ "$only_test" = false ]; then
     echo "Creating gitignore"
     cat > .gitignore <<EOF
 \#*#
