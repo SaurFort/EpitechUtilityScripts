@@ -1,18 +1,63 @@
 #!/bin/bash
 
-# Script writed by nathan.toumoulin@epitech.eu
-# You can use it as you need, it was created for fast repo install on Epitech CPool
+# Script written by nathan.toumoulin@epitech.eu
+# Fast repo install on Epitech CPool
+
+repo=""
+location=""
+only_test=false
+
+usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo "Options :"
+    echo "  -r, --repo <url>        URL du dépôt git"
+    echo "  -l, --location <path>   Dossier de destination"
+    echo "  -t, --only-test         Initialise git et push le .gitignore"
+    echo "  -h, --help              Affiche cette aide"
+    exit 0
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -r|--repo)
+            repo="$2"
+            shift 2
+            ;;
+        -l|--location)
+            location="$2"
+            shift 2
+            ;;
+        -t|--only-test)
+            only_test=true
+            shift
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            echo "Option inconnue : $1" >&2
+            usage
+            ;;
+    esac
+done
 
 echo "Initializing a repo for C language."
-read -p "Enter the git repo: " repo
-read -p "Enter the location where you want to init the repo: " location
+
+if [ -z "$repo" ]; then
+    read -p "Enter the git repo: " repo
+fi
+
+if [ -z "$location" ]; then
+    read -p "Enter the location where you want to init the repo: " location
+fi
 
 echo "Adding the repo at the location..."
-mkdir -p $location
-cd $location
+mkdir -p "$location"
+cd "$location" || exit 1
 
-echo "Creating gitignore"
-cat > .gitignore <<EOF
+if [ "$only_test" = true ]; then
+    echo "Creating gitignore"
+    cat > .gitignore <<EOF
 \#*#
 *~
 main.c
@@ -24,21 +69,23 @@ my_getnbr.c
 tests
 EOF
 
-git init -b main
-git add .gitignore
-git commit -m "Add .gitignore"
-git remote add origin "$repo"
-git push -u origin main
+    git init -b main
+    git add .gitignore
+    git commit -m "Add .gitignore"
+    git remote add origin "$repo"
+    git push -u origin main
+fi
 
 echo "Adding testing files"
 mkdir -p tests
-cd tests
+cd tests || exit 1
+
 cat > my_put_nbr.c <<EOF
-/*                                                                                                                                                                                                                   
-** EPITECH PROJECT, 2026                                                                                                                                                                                             
-** Tests                                                                                                                                                                                                             
-** File description:                                                                                                                                                                                                 
-** Some tests files                                                                                                                                                                                                  
+/*
+** EPITECH PROJECT, 2026
+** Tests
+** File description:
+** Some tests files
 */
 #include "libs.h"
 
@@ -131,7 +178,7 @@ int my_getnbr(char const *str)
 }
 EOF
 
-cat > my_put_char.c <<EOF
+cat > my_putchar.c <<EOF
 /*
 ** EPITECH PROJECT, 2026
 ** Tests
@@ -157,11 +204,8 @@ cat > libs.h <<EOF
     #define LIBS_H
 
 void my_putchar(char c);
-
 int my_put_nbr(int nb);
-
 int my_putstr(char const *str);
-
 int my_getnbr(char const *str);
 
 #endif
